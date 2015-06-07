@@ -33,13 +33,23 @@ public class Organisation {
     }
 
     public Expense createExpense(double amount, Trader tradeWith, User user) throws TransactionAmountException {
-        Expense expense = new Expense(amount, tradeWith, user, this);
+        Transaction.TransactionDataBundle bundle = new Transaction.TransactionDataBundle();
+        bundle.setAmount(-100.00)
+                .setShortDesc("Test expense short description")
+                .setLongDesc("Test expense long description")
+                .setTradeWith(tradeWith);
+        Expense expense = new Expense(bundle, user, this);
         transactions.add(expense);
         return expense;
     }
 
     public Income createIncome(double amount, Trader tradeWith, User user) throws TransactionCreationException {
-        Income income = new Income(amount, tradeWith, user, this);
+        Transaction.TransactionDataBundle bundle = new Transaction.TransactionDataBundle();
+        bundle.setAmount(150.00)
+                .setShortDesc("Test income short description")
+                .setLongDesc("Test income long description")
+                .setTradeWith(tradeWith);
+        Income income = new Income(bundle, user, this);
         transactions.add(income);
         return income;
     }

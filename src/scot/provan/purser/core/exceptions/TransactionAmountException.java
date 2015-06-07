@@ -2,6 +2,7 @@ package scot.provan.purser.core.exceptions;
 
 import scot.provan.purser.core.Organisation;
 import scot.provan.purser.core.Trader;
+import scot.provan.purser.core.Transaction;
 import scot.provan.purser.core.User;
 
 /**
@@ -14,14 +15,13 @@ public class TransactionAmountException extends TransactionCreationException {
     private Trader tradeWith;
 
     public TransactionAmountException(
-            double amount,
+            Transaction.TransactionDataBundle bundle,
             double minimumAllowed,
             double maximumAllowed,
-            Trader tradeWith,
             User addedBy,
             Organisation org
     ) {
-        super(amount, tradeWith, addedBy, org);
+        super(bundle, addedBy, org);
         this.minimumAllowed = minimumAllowed;
         this.maximumAllowed = maximumAllowed;
     }

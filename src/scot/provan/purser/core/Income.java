@@ -8,8 +8,8 @@ import scot.provan.purser.core.exceptions.TransactionAmountException;
  */
 public class Income extends Transaction {
 
-    public Income(double amount, Trader tradeWith, User addedBy, Organisation org) throws TransactionCreationException {
-        super(amount, tradeWith, addedBy, org);
-        if (amount <= 0) throw new TransactionAmountException(amount, 0, Double.MAX_VALUE, tradeWith, addedBy, org);
+    public Income(TransactionDataBundle bundle, User addedBy, Organisation org) throws TransactionCreationException {
+        super(bundle, addedBy, org);
+        if (bundle.getAmount() <= 0) throw new TransactionAmountException(bundle, 0, Double.MAX_VALUE, addedBy, org);
     }
 }
