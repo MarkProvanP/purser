@@ -5,32 +5,36 @@ import scot.provan.purser.core.exceptions.TransactionCreationException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * Created by Mark on 07/06/2015.
  */
 public class Organisation {
-    private Collection<Transaction> transactions;
-    private Collection<User> users;
-    private Collection<Trader> traders;
-    private Collection<Project> projects;
+    private HashMap<UUID, Transaction> transactions;
+    private HashMap<UUID, User> users;
+    private HashMap<UUID, Trader> traders;
+    private HashMap<UUID, Project> projects;
 
     public Organisation() {
-        transactions = new ArrayList<Transaction>();
-        users = new ArrayList<User>();
-        traders = new ArrayList<Trader>();
-        projects = new ArrayList<Project>();
+        super();
+
+        transactions = new HashMap<UUID, Transaction>();
+        users = new HashMap<UUID, User>();
+        traders = new HashMap<UUID, Trader>();
+        projects = new HashMap<UUID, Project>();
     }
 
     public User createUser(String name) {
         User user = new User(name, this);
-        users.add(user);
+        users.put(user.getUUID(), user);
         return user;
     }
 
     public Trader createTrader(String name, User user) {
         Trader trader = new Trader(name, user, this);
-        traders.add(trader);
+        traders.put(trader.getUUID(), trader);
         return trader;
     }
 
@@ -41,7 +45,7 @@ public class Organisation {
                 .setLongDesc("Test expense long description")
                 .setTradeWith(tradeWith);
         Expense expense = new Expense(bundle, user, this);
-        transactions.add(expense);
+        transactions.put(expense.getUUID(), expense);
         return expense;
     }
 
@@ -52,7 +56,7 @@ public class Organisation {
                 .setLongDesc("Test income long description")
                 .setTradeWith(tradeWith);
         Income income = new Income(bundle, user, this);
-        transactions.add(income);
+        transactions.put(income.getUUID(), income);
         return income;
     }
 
@@ -61,7 +65,7 @@ public class Organisation {
         bundle.setName(name)
                 .setDescription(desc);
         Project project = new Project(parent, bundle, addedBy, org);
-        projects.add(project);
+        projects.put(project.getUUID(), project);
         return project;
     }
 }

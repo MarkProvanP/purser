@@ -1,11 +1,13 @@
 package scot.provan.purser.core;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
  * Created by Mark on 07/06/2015.
  */
-public class Trader {
+public class Trader extends PurserObject {
+    private UUID uuid;
     private static int numberCreated;
     private int identifier;
     private String name;
@@ -14,6 +16,8 @@ public class Trader {
     private LocalDateTime added;
 
     public Trader(String name, User addedBy, Organisation org) {
+        super();
+
         if (name == null) throw new NullPointerException("Name is null.");
         if (addedBy == null) throw new NullPointerException("User is null.");
         if (org == null) throw new NullPointerException("Organisation is null.");

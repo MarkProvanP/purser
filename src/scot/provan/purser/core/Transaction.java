@@ -2,11 +2,12 @@ package scot.provan.purser.core;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.UUID;
 
 /**
  * Created by Mark on 07/06/2015.
  */
-public abstract class Transaction {
+public abstract class Transaction extends PurserObject {
     private static int numberCreated;
     private int identifier;
     private LocalDateTime added;
@@ -15,6 +16,8 @@ public abstract class Transaction {
     private TransactionDataBundle bundle;
 
     public Transaction(TransactionDataBundle bundle, User addedBy, Organisation org) {
+        super();
+
         if (bundle == null) throw new NullPointerException("Transaction data bundle is null.");
         if (addedBy == null) throw new NullPointerException("User is null.");
         if (org == null) throw new NullPointerException("Organisation is null.");
