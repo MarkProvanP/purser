@@ -1,6 +1,4 @@
-package scot.provan.purser.core;
-
-import java.util.UUID;
+package scot.provan.purser.core.objects;
 
 /**
  * Created by Mark on 07/06/2015.

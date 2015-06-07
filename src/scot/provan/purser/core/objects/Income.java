@@ -1,4 +1,4 @@
-package scot.provan.purser.core;
+package scot.provan.purser.core.objects;
 
 import scot.provan.purser.core.exceptions.TransactionCreationException;
 import scot.provan.purser.core.exceptions.TransactionAmountException;

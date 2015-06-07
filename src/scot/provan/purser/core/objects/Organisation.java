@@ -1,10 +1,8 @@
-package scot.provan.purser.core;
+package scot.provan.purser.core.objects;
 
 import scot.provan.purser.core.exceptions.TransactionAmountException;
 import scot.provan.purser.core.exceptions.TransactionCreationException;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.UUID;
 

@@ -1,4 +1,4 @@
-package scot.provan.purser.core;
+package scot.provan.purser.core.objects;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

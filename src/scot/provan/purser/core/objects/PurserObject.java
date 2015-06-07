@@ -1,4 +1,4 @@
-package scot.provan.purser.core;
+package scot.provan.purser.core.objects;
 
 import java.util.UUID;
 

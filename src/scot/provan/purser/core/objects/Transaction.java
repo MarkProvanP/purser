@@ -1,8 +1,7 @@
-package scot.provan.purser.core;
+package scot.provan.purser.core.objects;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.UUID;
 
 /**
  * Created by Mark on 07/06/2015.

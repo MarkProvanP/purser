@@ -1,9 +1,9 @@
 package scot.provan.purser.core.exceptions;
 
-import scot.provan.purser.core.Organisation;
-import scot.provan.purser.core.Trader;
-import scot.provan.purser.core.Transaction;
-import scot.provan.purser.core.User;
+import scot.provan.purser.core.objects.Organisation;
+import scot.provan.purser.core.objects.Trader;
+import scot.provan.purser.core.objects.Transaction;
+import scot.provan.purser.core.objects.User;
 
 /**
  * Created by Mark on 07/06/2015.
