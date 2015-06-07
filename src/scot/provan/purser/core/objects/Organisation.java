@@ -40,44 +40,31 @@ public class Organisation {
         projects = new HashMap<UUID, Project>();
     }
 
-    public UUID createUser(String name) {
-        User user = new User(name, this);
+    public UUID createUser(User.UserDataBundle bundle) {
+        User user = new User(bundle, this);
         users.put(user.getUUID(), user);
         return user.getUUID();
     }
 
-    public UUID createTrader(String name, User user) {
-        Trader trader = new Trader(name, user, this);
+    public UUID createTrader(Trader.TraderDataBundle bundle, UUID user) {
+        Trader trader = new Trader(bundle, user, this);
         traders.put(trader.getUUID(), trader);
         return trader.getUUID();
     }
 
-    public UUID createExpense(double amount, Trader tradeWith, User user) throws TransactionAmountException {
-        Transaction.TransactionDataBundle bundle = new Transaction.TransactionDataBundle();
-        bundle.setAmount(-100.00)
-                .setShortDesc("Test expense short description")
-                .setLongDesc("Test expense long description")
-                .setTradeWith(tradeWith);
+    public UUID createExpense(Transaction.TransactionDataBundle bundle, UUID user) throws TransactionAmountException {
         Expense expense = new Expense(bundle, user, this);
         transactions.put(expense.getUUID(), expense);
         return expense.getUUID();
     }
 
-    public UUID createIncome(double amount, Trader tradeWith, User user) throws TransactionCreationException {
-        Transaction.TransactionDataBundle bundle = new Transaction.TransactionDataBundle();
-        bundle.setAmount(150.00)
-                .setShortDesc("Test income short description")
-                .setLongDesc("Test income long description")
-                .setTradeWith(tradeWith);
+    public UUID createIncome(Transaction.TransactionDataBundle bundle, UUID user) throws TransactionCreationException {
         Income income = new Income(bundle, user, this);
         transactions.put(income.getUUID(), income);
         return income.getUUID();
     }
 
-    public UUID createProject(Project parent, String name, String desc, User addedBy, Organisation org) {
-        Project.ProjectDataBundle bundle = new Project.ProjectDataBundle();
-        bundle.setName(name)
-                .setDescription(desc);
+    public UUID createProject(UUID parent, Project.ProjectDataBundle bundle, UUID addedBy, Organisation org) {
         Project project = new Project(parent, bundle, addedBy, org);
         projects.put(project.getUUID(), project);
         return project.getUUID();

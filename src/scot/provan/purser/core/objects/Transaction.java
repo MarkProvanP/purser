@@ -2,27 +2,24 @@ package scot.provan.purser.core.objects;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.UUID;
 
 /**
  * Created by Mark on 07/06/2015.
  */
 public abstract class Transaction extends PurserObject {
-    private static int numberCreated;
-    private int identifier;
     private LocalDateTime added;
-    private User addedBy;
+    private UUID addedBy;
     private Organisation org;
     private TransactionDataBundle bundle;
 
-    public Transaction(TransactionDataBundle bundle, User addedBy, Organisation org) {
+    public Transaction(TransactionDataBundle bundle, UUID addedBy, Organisation org) {
         super();
 
         if (bundle == null) throw new NullPointerException("Transaction data bundle is null.");
         if (addedBy == null) throw new NullPointerException("User is null.");
         if (org == null) throw new NullPointerException("Organisation is null.");
 
-        this.identifier = numberCreated;
-        numberCreated++;
         this.added = LocalDateTime.now();
         this.addedBy = addedBy;
         this.org = org;
@@ -57,11 +54,11 @@ public abstract class Transaction extends PurserObject {
             return this;
         }
 
-        public Trader getTradeWith() {
+        public UUID getTradeWith() {
             return tradeWith;
         }
 
-        public TransactionDataBundle setTradeWith(Trader tradeWith) {
+        public TransactionDataBundle setTradeWith(UUID tradeWith) {
             this.tradeWith = tradeWith;
             return this;
         }
@@ -75,11 +72,11 @@ public abstract class Transaction extends PurserObject {
             return this;
         }
 
-        public Collection<Project> getProjects() {
+        public Collection<UUID> getProjects() {
             return projects;
         }
 
-        public TransactionDataBundle setProjects(Collection<Project> projects) {
+        public TransactionDataBundle setProjects(Collection<UUID> projects) {
             this.projects = projects;
             return this;
         }
@@ -87,8 +84,8 @@ public abstract class Transaction extends PurserObject {
         private String shortDesc;
         private String longDesc;
         private double amount;
-        private Trader tradeWith;
+        private UUID tradeWith;
         private LocalDateTime transactedDateTime;
-        private Collection<Project> projects;
+        private Collection<UUID> projects;
     }
 }

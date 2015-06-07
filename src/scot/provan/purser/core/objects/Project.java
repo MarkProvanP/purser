@@ -2,19 +2,20 @@ package scot.provan.purser.core.objects;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.UUID;
 
 /**
  * Created by Mark on 07/06/2015.
  */
 public class Project extends PurserObject {
-    private Project parent;
-    private Collection<Project> children;
-    private Collection<Transaction> transactions;
+    private UUID parent;
+    private Collection<UUID> children;
+    private Collection<UUID> transactions;
     private ProjectDataBundle bundle;
-    private User addedBy;
+    private UUID addedBy;
     private Organisation org;
 
-    public Project(Project parent, ProjectDataBundle bundle, User addedBy, Organisation org) {
+    public Project(UUID parent, ProjectDataBundle bundle, UUID addedBy, Organisation org) {
         super();
 
         if (bundle == null) throw new NullPointerException("Bundle is null.");
@@ -22,8 +23,8 @@ public class Project extends PurserObject {
         if (org == null) throw new NullPointerException("Organisation is null.");
 
         this.parent = parent;
-        children = new ArrayList<Project>();
-        transactions = new ArrayList<Transaction>();
+        children = new ArrayList<UUID>();
+        transactions = new ArrayList<UUID>();
         this.bundle = bundle;
         this.org = org;
     }
