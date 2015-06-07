@@ -13,11 +13,13 @@ public class Organisation {
     private Collection<Transaction> transactions;
     private Collection<User> users;
     private Collection<Trader> traders;
+    private Collection<Project> projects;
 
     public Organisation() {
         transactions = new ArrayList<Transaction>();
         users = new ArrayList<User>();
         traders = new ArrayList<Trader>();
+        projects = new ArrayList<Project>();
     }
 
     public User createUser(String name) {
@@ -52,5 +54,14 @@ public class Organisation {
         Income income = new Income(bundle, user, this);
         transactions.add(income);
         return income;
+    }
+
+    public Project createProject(Project parent, String name, String desc, User addedBy, Organisation org) {
+        Project.ProjectDataBundle bundle = new Project.ProjectDataBundle();
+        bundle.setName(name)
+                .setDescription(desc);
+        Project project = new Project(parent, bundle, addedBy, org);
+        projects.add(project);
+        return project;
     }
 }

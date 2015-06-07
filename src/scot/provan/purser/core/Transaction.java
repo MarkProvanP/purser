@@ -1,6 +1,7 @@
 package scot.provan.purser.core;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 /**
  * Created by Mark on 07/06/2015.
@@ -72,10 +73,20 @@ public abstract class Transaction {
             return this;
         }
 
+        public Collection<Project> getProjects() {
+            return projects;
+        }
+
+        public TransactionDataBundle setProjects(Collection<Project> projects) {
+            this.projects = projects;
+            return this;
+        }
+
         private String shortDesc;
         private String longDesc;
         private double amount;
         private Trader tradeWith;
         private LocalDateTime transactedDateTime;
+        private Collection<Project> projects;
     }
 }

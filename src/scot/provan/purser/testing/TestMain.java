@@ -27,5 +27,7 @@ public class TestMain {
             e.printStackTrace();
             System.exit(1);
         }
+        Project project = myOrg.createProject(null, "Test project", "Test project description", myUser, myOrg);
+        
     }
 }
