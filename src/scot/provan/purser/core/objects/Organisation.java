@@ -10,6 +10,22 @@ import java.util.UUID;
  * Created by Mark on 07/06/2015.
  */
 public class Organisation {
+    public HashMap<UUID, Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public HashMap<UUID, User> getUsers() {
+        return users;
+    }
+
+    public HashMap<UUID, Trader> getTraders() {
+        return traders;
+    }
+
+    public HashMap<UUID, Project> getProjects() {
+        return projects;
+    }
+
     private HashMap<UUID, Transaction> transactions;
     private HashMap<UUID, User> users;
     private HashMap<UUID, Trader> traders;
@@ -24,19 +40,19 @@ public class Organisation {
         projects = new HashMap<UUID, Project>();
     }
 
-    public User createUser(String name) {
+    public UUID createUser(String name) {
         User user = new User(name, this);
         users.put(user.getUUID(), user);
-        return user;
+        return user.getUUID();
     }
 
-    public Trader createTrader(String name, User user) {
+    public UUID createTrader(String name, User user) {
         Trader trader = new Trader(name, user, this);
         traders.put(trader.getUUID(), trader);
-        return trader;
+        return trader.getUUID();
     }
 
-    public Expense createExpense(double amount, Trader tradeWith, User user) throws TransactionAmountException {
+    public UUID createExpense(double amount, Trader tradeWith, User user) throws TransactionAmountException {
         Transaction.TransactionDataBundle bundle = new Transaction.TransactionDataBundle();
         bundle.setAmount(-100.00)
                 .setShortDesc("Test expense short description")
@@ -44,10 +60,10 @@ public class Organisation {
                 .setTradeWith(tradeWith);
         Expense expense = new Expense(bundle, user, this);
         transactions.put(expense.getUUID(), expense);
-        return expense;
+        return expense.getUUID();
     }
 
-    public Income createIncome(double amount, Trader tradeWith, User user) throws TransactionCreationException {
+    public UUID createIncome(double amount, Trader tradeWith, User user) throws TransactionCreationException {
         Transaction.TransactionDataBundle bundle = new Transaction.TransactionDataBundle();
         bundle.setAmount(150.00)
                 .setShortDesc("Test income short description")
@@ -55,15 +71,15 @@ public class Organisation {
                 .setTradeWith(tradeWith);
         Income income = new Income(bundle, user, this);
         transactions.put(income.getUUID(), income);
-        return income;
+        return income.getUUID();
     }
 
-    public Project createProject(Project parent, String name, String desc, User addedBy, Organisation org) {
+    public UUID createProject(Project parent, String name, String desc, User addedBy, Organisation org) {
         Project.ProjectDataBundle bundle = new Project.ProjectDataBundle();
         bundle.setName(name)
                 .setDescription(desc);
         Project project = new Project(parent, bundle, addedBy, org);
         projects.put(project.getUUID(), project);
-        return project;
+        return project.getUUID();
     }
 }
