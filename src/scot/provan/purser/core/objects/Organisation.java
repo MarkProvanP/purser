@@ -1,7 +1,6 @@
 package scot.provan.purser.core.objects;
 
-import scot.provan.purser.core.exceptions.TransactionAmountException;
-import scot.provan.purser.core.exceptions.TransactionCreationException;
+import scot.provan.purser.core.exceptions.*;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -68,5 +67,37 @@ public class Organisation {
         Project project = new Project(parent, bundle, addedBy, org);
         projects.put(project.getUUID(), project);
         return project.getUUID();
+    }
+
+    public User getUser(UUID userUUID) throws UserNotFoundException {
+        User user = users.get(userUUID);
+        if (user == null) {
+            throw new UserNotFoundException();
+        }
+        return user;
+    }
+
+    public Trader getTrader(UUID traderUUID) throws TraderNotFoundException {
+        Trader trader = traders.get(traderUUID);
+        if (trader == null) {
+            throw new TraderNotFoundException();
+        }
+        return trader;
+    }
+
+    public Project getProject(UUID projectUUID) throws ProjectNotFoundException {
+        Project project = projects.get(projectUUID);
+        if (project == null) {
+            throw new ProjectNotFoundException();
+        }
+        return project;
+    }
+
+    public Transaction getTransaction(UUID transactionUUID) throws TransactionNotFoundException {
+        Transaction transaction = transactions.get(transactionUUID);
+        if (transaction == null) {
+            throw new TransactionNotFoundException();
+        }
+        return transaction;
     }
 }

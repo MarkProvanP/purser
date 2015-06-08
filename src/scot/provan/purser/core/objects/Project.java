@@ -57,8 +57,18 @@ public class Project extends PurserObject {
             return this;
         }
 
+        public double getBudget() {
+            return budget;
+        }
+
+        public ProjectDataBundle setBudget(double budget) {
+            this.budget = budget;
+            return this;
+        }
+
         private String name;
         private String description;
         private Collection<User> users;
+        private double budget;
     }
 }

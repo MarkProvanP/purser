@@ -1,7 +1,6 @@
 package scot.provan.purser.testing;
 
-import scot.provan.purser.core.exceptions.TransactionAmountException;
-import scot.provan.purser.core.exceptions.TransactionCreationException;
+import scot.provan.purser.core.exceptions.*;
 import scot.provan.purser.core.objects.*;
 
 import java.util.UUID;
@@ -24,13 +23,21 @@ public class TestMain {
         Trader.TraderDataBundle traderDataBundle = new Trader.TraderDataBundle();
         traderDataBundle.setName("Test trader");
         UUID myTraderUUID = myOrg.createTrader(traderDataBundle, myUserUUID);
-        Trader myTrader = myOrg.getTraders().get(myTraderUUID);
+        try {
+            Trader myTrader = myOrg.getTrader(myTraderUUID);
+        } catch (TraderNotFoundException e) {
+            e.printStackTrace();
+        }
 
         // Create test project
         Project.ProjectDataBundle projectDataBundle = new Project.ProjectDataBundle();
         projectDataBundle.setName("Test project").setDescription("Test project description");
         UUID myProjectUUID = myOrg.createProject(null, projectDataBundle, myUserUUID, myOrg);
-        Project myProject = myOrg.getProjects().get(myProjectUUID);
+        try {
+            Project myProject = myOrg.getProject(myProjectUUID);
+        } catch (ProjectNotFoundException e) {
+            e.printStackTrace();
+        }
 
         // Create test expense
         UUID myExpenseUUID = null;
@@ -39,10 +46,14 @@ public class TestMain {
         expenseDataBundle.setAmount(-100.00).setTradeWith(myTraderUUID);
         try {
             myExpenseUUID = myOrg.createExpense(expenseDataBundle, myUserUUID);
-            myExpense = (Expense) myOrg.getTransactions().get(myExpenseUUID);
         } catch (TransactionAmountException e) {
             e.printStackTrace();
             System.exit(1);
+        }
+        try {
+            myExpense = (Expense) myOrg.getTransaction(myExpenseUUID);
+        } catch (TransactionNotFoundException e) {
+            e.printStackTrace();
         }
 
         // Create test income
@@ -52,10 +63,14 @@ public class TestMain {
         incomeDataBundle.setAmount(150.00).setTradeWith(myTraderUUID);
         try {
             myIncomeUUID = myOrg.createIncome(incomeDataBundle, myUserUUID);
-            myIncome = (Income) myOrg.getTransactions().get(myIncomeUUID);
         } catch (TransactionCreationException e) {
             e.printStackTrace();
             System.exit(1);
+        }
+        try {
+            myIncome = (Income) myOrg.getTransaction(myIncomeUUID);
+        } catch (TransactionNotFoundException e) {
+            e.printStackTrace();
         }
 
 
