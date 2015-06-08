@@ -8,10 +8,15 @@ import java.util.UUID;
  * Created by Mark on 07/06/2015.
  */
 public abstract class Transaction extends PurserObject {
+    public enum TransactionStatus {
+        PROJECTED, CANCELLED, COMPLETED, REJECTED, UNKNOWN
+    }
+
     private LocalDateTime added;
     private UUID addedBy;
     private Organisation org;
     private TransactionDataBundle bundle;
+    private TransactionStatus status;
 
     public Transaction(TransactionDataBundle bundle, UUID addedBy, Organisation org) {
         super();
@@ -24,6 +29,7 @@ public abstract class Transaction extends PurserObject {
         this.addedBy = addedBy;
         this.org = org;
         this.bundle = bundle;
+        this.status = TransactionStatus.UNKNOWN;
     }
 
     public static class TransactionDataBundle {
