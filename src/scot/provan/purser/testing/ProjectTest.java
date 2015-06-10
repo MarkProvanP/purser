@@ -23,7 +23,10 @@ public class ProjectTest {
     @Test
     public static void TestUserCreation() {
         Organisation org1 = new Organisation();
-        UUID user1UUID = org1.createUser("Test user");
+        User.UserDataBundle user1data = new User.UserDataBundle();
+        user1data.setFirstname("Test")
+                .setLastname("User");
+        UUID user1UUID = org1.createUser(user1data);
         User user1;
     }
 
