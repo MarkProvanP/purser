@@ -1,6 +1,5 @@
 package scot.provan.purser.testing;
 
-import org.junit.Before;
 import org.junit.Test;
 import scot.provan.purser.core.exceptions.UserNotFoundException;
 import scot.provan.purser.core.objects.Organisation;
@@ -25,8 +24,8 @@ public class ProjectTest {
     public void TestUserCreation() {
         Organisation org1 = new Organisation();
         User.UserDataBundle user1data = new User.UserDataBundle();
-        user1data.setFirstname("Test")
-                .setLastname("User");
+        user1data.setFirstName("Test")
+                .setLastName("User");
         UUID user1UUID = org1.createUser(user1data);
         try {
             User user1 = org1.getUser(user1UUID);

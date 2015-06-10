@@ -15,7 +15,7 @@ public class TestMain {
 
         // Create test user
         User.UserDataBundle userDataBundle = new User.UserDataBundle();
-        userDataBundle.setFirstname("Test").setLastname("User");
+        userDataBundle.setFirstName("Test").setLastName("User");
         UUID myUserUUID = myOrg.createUser(userDataBundle);
         User myUser;
         try {

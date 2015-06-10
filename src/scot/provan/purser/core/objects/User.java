@@ -1,13 +1,13 @@
 package scot.provan.purser.core.objects;
 
-import java.util.UUID;
-
 /**
  * Created by Mark on 07/06/2015.
  */
 public class User extends PurserObject {
-    private UserDataBundle bundle;
     private Organisation org;
+
+    private String firstName;
+    private String lastName;
 
     public User(UserDataBundle bundle, Organisation org) {
         super();
@@ -15,31 +15,33 @@ public class User extends PurserObject {
         if (bundle == null) throw new NullPointerException("User data bundle is null.");
         if (org == null) throw new NullPointerException("Organisation is null.");
 
-        this.bundle = bundle;
         this.org = org;
+
+        this.firstName = bundle.getFirstName();
+        this.lastName = bundle.getLastName();
     }
 
     public static class UserDataBundle {
-        public String getFirstname() {
-            return firstname;
+        public String getFirstName() {
+            return firstName;
         }
 
-        public UserDataBundle setFirstname(String firstname) {
-            this.firstname = firstname;
+        public UserDataBundle setFirstName(String firstName) {
+            this.firstName = firstName;
             return this;
         }
 
-        public String getLastname() {
-            return lastname;
+        public String getLastName() {
+            return lastName;
         }
 
-        public UserDataBundle setLastname(String lastname) {
-            this.lastname = lastname;
+        public UserDataBundle setLastName(String lastName) {
+            this.lastName = lastName;
             return this;
         }
 
-        private String firstname;
-        private String lastname;
+        private String firstName;
+        private String lastName;
 
     }
 }

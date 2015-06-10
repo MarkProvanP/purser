@@ -11,9 +11,13 @@ public class Project extends PurserObject {
     private UUID parent;
     private Collection<UUID> children;
     private Collection<UUID> transactions;
-    private ProjectDataBundle bundle;
     private UUID addedBy;
     private Organisation org;
+
+    private String name;
+    private String description;
+    private Collection<User> users;
+    private double budget;
 
     public Project(UUID parent, ProjectDataBundle bundle, UUID addedBy, Organisation org) {
         super();
@@ -25,8 +29,12 @@ public class Project extends PurserObject {
         this.parent = parent;
         children = new ArrayList<UUID>();
         transactions = new ArrayList<UUID>();
-        this.bundle = bundle;
         this.org = org;
+
+        this.name = bundle.getName();
+        this.description = bundle.getDescription();
+        this.users = bundle.getUsers();
+        this.budget = bundle.getBudget();
     }
 
     public static class ProjectDataBundle {

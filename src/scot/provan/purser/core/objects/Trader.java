@@ -8,10 +8,11 @@ import java.util.UUID;
  */
 public class Trader extends PurserObject {
     private UUID uuid;
-    private TraderDataBundle bundle;
     private UUID addedBy;
     private Organisation org;
     private LocalDateTime added;
+
+    private String name;
 
     public Trader(TraderDataBundle bundle, UUID addedBy, Organisation org) {
         super();
@@ -20,10 +21,11 @@ public class Trader extends PurserObject {
         if (addedBy == null) throw new NullPointerException("User is null.");
         if (org == null) throw new NullPointerException("Organisation is null.");
 
-        this.bundle = bundle;
         this.addedBy = addedBy;
         this.org = org;
         this.added = LocalDateTime.now();
+
+        this.name = bundle.getName();
     }
 
     public static class TraderDataBundle {

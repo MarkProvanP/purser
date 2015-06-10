@@ -14,7 +14,15 @@ public abstract class Transaction extends PurserObject {
 
     private UUID addedBy;
     private Organisation org;
-    private TransactionDataBundle bundle;
+
+    private String shortDesc;
+    private String longDesc;
+    private double amount;
+    private UUID tradeWith;
+    private LocalDateTime transactedDateTime;
+    private Collection<UUID> projects;
+    private UUID orgFund;
+    private TransactionStatus status;
 
     public Transaction(TransactionDataBundle bundle, UUID addedBy, Organisation org) {
         super();
@@ -25,7 +33,15 @@ public abstract class Transaction extends PurserObject {
 
         this.addedBy = addedBy;
         this.org = org;
-        this.bundle = bundle;
+
+        this.shortDesc = bundle.getShortDesc();
+        this.longDesc = bundle.getLongDesc();
+        this.amount = bundle.getAmount();
+        this.tradeWith = bundle.getTradeWith();
+        this.transactedDateTime = bundle.getTransactedDateTime();
+        this.projects = bundle.getProjects();
+        this.orgFund = bundle.getOrgFund();
+        this.status = bundle.getStatus();
     }
 
     public static class TransactionDataBundle {

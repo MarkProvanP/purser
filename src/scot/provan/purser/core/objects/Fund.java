@@ -8,8 +8,10 @@ import java.util.UUID;
  */
 public class Fund extends PurserObject {
     private UUID addedBy;
-    private FundDataBundle bundle;
     private Organisation org;
+
+    private String name;
+    private Collection<UUID> transactions;
 
     public Fund(FundDataBundle bundle, UUID addedBy, Organisation org) {
         super();
@@ -19,8 +21,10 @@ public class Fund extends PurserObject {
         if (org == null) throw new NullPointerException("Fund org is null");
 
         this.addedBy = addedBy;
-        this.bundle = bundle;
         this.org = org;
+
+        this.name = bundle.getName();
+        this.transactions = bundle.getTransactions();
     }
 
     public static class FundDataBundle {
