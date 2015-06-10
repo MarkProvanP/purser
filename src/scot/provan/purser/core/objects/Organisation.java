@@ -29,6 +29,7 @@ public class Organisation {
     private HashMap<UUID, User> users;
     private HashMap<UUID, Trader> traders;
     private HashMap<UUID, Project> projects;
+    private HashMap<UUID, Fund> funds;
 
     public Organisation() {
         super();
@@ -37,6 +38,7 @@ public class Organisation {
         users = new HashMap<UUID, User>();
         traders = new HashMap<UUID, Trader>();
         projects = new HashMap<UUID, Project>();
+        funds = new HashMap<UUID, Fund>();
     }
 
     public UUID createUser(User.UserDataBundle bundle) {
@@ -69,6 +71,12 @@ public class Organisation {
         return project.getUUID();
     }
 
+    public UUID createFund(Fund.FundDataBundle bundle, UUID user) {
+        Fund fund = new Fund(bundle, user, this);
+        funds.put(fund.getUUID(), fund);
+        return fund.getUUID();
+    }
+
     public User getUser(UUID userUUID) throws UserNotFoundException {
         User user = users.get(userUUID);
         if (user == null) {
@@ -99,5 +107,13 @@ public class Organisation {
             throw new TransactionNotFoundException();
         }
         return transaction;
+    }
+
+    public Fund getFund(UUID fundUUID) throws FundNotFoundException {
+        Fund fund = funds.get(fundUUID);
+        if (fund == null) {
+            throw new FundNotFoundException();
+        }
+        return fund;
     }
 }

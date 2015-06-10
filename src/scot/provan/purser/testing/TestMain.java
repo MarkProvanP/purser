@@ -17,7 +17,12 @@ public class TestMain {
         User.UserDataBundle userDataBundle = new User.UserDataBundle();
         userDataBundle.setFirstname("Test").setLastname("User");
         UUID myUserUUID = myOrg.createUser(userDataBundle);
-        User myUser = myOrg.getUsers().get(myUserUUID);
+        User myUser;
+        try {
+            myUser = myOrg.getUser(myUserUUID);
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        }
 
         // Create test trader
         Trader.TraderDataBundle traderDataBundle = new Trader.TraderDataBundle();
@@ -39,11 +44,21 @@ public class TestMain {
             e.printStackTrace();
         }
 
+        // Create test fund
+        Fund.FundDataBundle fundDataBundle = new Fund.FundDataBundle();
+        fundDataBundle.setName("Test fund");
+        UUID myFundUUID = myOrg.createFund(fundDataBundle, myUserUUID);
+        try {
+            Fund myFund = myOrg.getFund(myFundUUID);
+        } catch (FundNotFoundException e) {
+            e.printStackTrace();
+        }
+
         // Create test expense
         UUID myExpenseUUID = null;
         Expense myExpense = null;
         Transaction.TransactionDataBundle expenseDataBundle = new Transaction.TransactionDataBundle();
-        expenseDataBundle.setAmount(-100.00).setTradeWith(myTraderUUID);
+        expenseDataBundle.setAmount(-100.00).setTradeWith(myTraderUUID).setOrgFund(myFundUUID);
         try {
             myExpenseUUID = myOrg.createExpense(expenseDataBundle, myUserUUID);
         } catch (TransactionAmountException e) {
@@ -60,7 +75,7 @@ public class TestMain {
         UUID myIncomeUUID = null;
         Income myIncome = null;
         Transaction.TransactionDataBundle incomeDataBundle = new Transaction.TransactionDataBundle();
-        incomeDataBundle.setAmount(150.00).setTradeWith(myTraderUUID);
+        incomeDataBundle.setAmount(150.00).setTradeWith(myTraderUUID).setOrgFund(myFundUUID);
         try {
             myIncomeUUID = myOrg.createIncome(incomeDataBundle, myUserUUID);
         } catch (TransactionCreationException e) {

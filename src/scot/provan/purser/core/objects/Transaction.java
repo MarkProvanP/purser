@@ -12,11 +12,9 @@ public abstract class Transaction extends PurserObject {
         PROJECTED, CANCELLED, COMPLETED, REJECTED, UNKNOWN
     }
 
-    private LocalDateTime added;
     private UUID addedBy;
     private Organisation org;
     private TransactionDataBundle bundle;
-    private TransactionStatus status;
 
     public Transaction(TransactionDataBundle bundle, UUID addedBy, Organisation org) {
         super();
@@ -25,11 +23,9 @@ public abstract class Transaction extends PurserObject {
         if (addedBy == null) throw new NullPointerException("User is null.");
         if (org == null) throw new NullPointerException("Organisation is null.");
 
-        this.added = LocalDateTime.now();
         this.addedBy = addedBy;
         this.org = org;
         this.bundle = bundle;
-        this.status = TransactionStatus.UNKNOWN;
     }
 
     public static class TransactionDataBundle {
@@ -87,11 +83,31 @@ public abstract class Transaction extends PurserObject {
             return this;
         }
 
+        public UUID getOrgFund() {
+            return orgFund;
+        }
+
+        public TransactionDataBundle setOrgFund(UUID orgFund) {
+            this.orgFund = orgFund;
+            return this;
+        }
+
+        public TransactionStatus getStatus() {
+            return status;
+        }
+
+        public TransactionDataBundle setStatus(TransactionStatus status) {
+            this.status = status;
+            return this;
+        }
+
         private String shortDesc;
         private String longDesc;
         private double amount;
         private UUID tradeWith;
         private LocalDateTime transactedDateTime;
         private Collection<UUID> projects;
+        private UUID orgFund;
+        private TransactionStatus status;
     }
 }
