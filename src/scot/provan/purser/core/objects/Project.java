@@ -1,5 +1,10 @@
 package scot.provan.purser.core.objects;
 
+import scot.provan.purser.core.PurserCommon;
+import scot.provan.purser.core.exceptions.ProjectNotFoundException;
+import scot.provan.purser.core.exceptions.PurserObjectNotFoundException;
+import scot.provan.purser.core.exceptions.UserNotFoundException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
@@ -16,10 +21,10 @@ public class Project extends PurserObject {
 
     private String name;
     private String description;
-    private Collection<User> users;
+    private Collection<UUID> users;
     private double budget;
 
-    public Project(UUID parent, ProjectDataBundle bundle, UUID addedBy, Organisation org) {
+    public Project(UUID parent, ProjectDataBundle bundle, UUID addedBy, Organisation org) throws PurserObjectNotFoundException {
         super();
 
         if (bundle == null) throw new NullPointerException("Bundle is null.");
@@ -27,13 +32,47 @@ public class Project extends PurserObject {
         if (org == null) throw new NullPointerException("Organisation is null.");
 
         this.parent = parent;
+        this.addedBy = addedBy;
         children = new ArrayList<UUID>();
         transactions = new ArrayList<UUID>();
         this.org = org;
 
+        // Have to test that the provided addedBy User UUID does exist in the Organisation's list of users.
+        try {
+            org.getUser(this.addedBy);
+        } catch (UserNotFoundException e) {
+            PurserCommon.log(PurserCommon.LogLevel.INFO,
+                    String.format("Error when creating Project: %s - Project creator User UUID not found.",
+                            e.getMessage()));
+            throw e;
+        }
+
+        // Have to test that the provided parent Project UUID does exist in the Organisation's list of projects.
+        try {
+            org.getProject(this.parent);
+        } catch (ProjectNotFoundException e) {
+            PurserCommon.log(PurserCommon.LogLevel.INFO,
+                    String.format("Error when creating Project: %s - Project parent Project UUID not found.",
+                            e.getMessage()));
+            throw e;
+        }
+
         this.name = bundle.getName();
         this.description = bundle.getDescription();
         this.users = bundle.getUsers();
+
+        // Have to test that each of the provided users' User UUID does exist in the Organisation's list of users.
+        for (UUID usersUUID : this.users) {
+            try {
+                org.getUser(usersUUID);
+            } catch (UserNotFoundException e) {
+                PurserCommon.log(PurserCommon.LogLevel.INFO,
+                        String.format("Error when creating Project: %s - Project users' User UUID not found.",
+                                e.getMessage()));
+                throw e;
+            }
+        }
+
         this.budget = bundle.getBudget();
     }
 
@@ -56,11 +95,11 @@ public class Project extends PurserObject {
             return this;
         }
 
-        public Collection<User> getUsers() {
+        public Collection<UUID> getUsers() {
             return users;
         }
 
-        public ProjectDataBundle setUsers(Collection<User> users) {
+        public ProjectDataBundle setUsers(Collection<UUID> users) {
             this.users = users;
             return this;
         }
@@ -76,7 +115,7 @@ public class Project extends PurserObject {
 
         private String name;
         private String description;
-        private Collection<User> users;
+        private Collection<UUID> users;
         private double budget;
     }
 }

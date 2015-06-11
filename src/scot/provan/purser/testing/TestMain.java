@@ -27,7 +27,12 @@ public class TestMain {
         // Create test trader
         Trader.TraderDataBundle traderDataBundle = new Trader.TraderDataBundle();
         traderDataBundle.setName("Test trader");
-        UUID myTraderUUID = myOrg.createTrader(traderDataBundle, myUserUUID);
+        UUID myTraderUUID = null;
+        try {
+            myTraderUUID = myOrg.createTrader(traderDataBundle, myUserUUID);
+        } catch (PurserObjectNotFoundException e) {
+            e.printStackTrace();
+        }
         try {
             Trader myTrader = myOrg.getTrader(myTraderUUID);
         } catch (TraderNotFoundException e) {
@@ -37,7 +42,12 @@ public class TestMain {
         // Create test project
         Project.ProjectDataBundle projectDataBundle = new Project.ProjectDataBundle();
         projectDataBundle.setName("Test project").setDescription("Test project description");
-        UUID myProjectUUID = myOrg.createProject(null, projectDataBundle, myUserUUID, myOrg);
+        UUID myProjectUUID = null;
+        try {
+            myProjectUUID = myOrg.createProject(null, projectDataBundle, myUserUUID, myOrg);
+        } catch (PurserObjectNotFoundException e) {
+            e.printStackTrace();
+        }
         try {
             Project myProject = myOrg.getProject(myProjectUUID);
         } catch (ProjectNotFoundException e) {
@@ -47,7 +57,12 @@ public class TestMain {
         // Create test fund
         Fund.FundDataBundle fundDataBundle = new Fund.FundDataBundle();
         fundDataBundle.setName("Test fund");
-        UUID myFundUUID = myOrg.createFund(fundDataBundle, myUserUUID);
+        UUID myFundUUID = null;
+        try {
+            myFundUUID = myOrg.createFund(fundDataBundle, myUserUUID);
+        } catch (PurserObjectNotFoundException e) {
+            e.printStackTrace();
+        }
         try {
             Fund myFund = myOrg.getFund(myFundUUID);
         } catch (FundNotFoundException e) {

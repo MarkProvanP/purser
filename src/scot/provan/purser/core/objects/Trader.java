@@ -1,5 +1,9 @@
 package scot.provan.purser.core.objects;
 
+import scot.provan.purser.core.PurserCommon;
+import scot.provan.purser.core.exceptions.PurserObjectNotFoundException;
+import scot.provan.purser.core.exceptions.UserNotFoundException;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -14,7 +18,7 @@ public class Trader extends PurserObject {
 
     private String name;
 
-    public Trader(TraderDataBundle bundle, UUID addedBy, Organisation org) {
+    public Trader(TraderDataBundle bundle, UUID addedBy, Organisation org) throws PurserObjectNotFoundException {
         super();
 
         if (bundle == null) throw new NullPointerException("Trader data bundle is null.");
@@ -23,6 +27,17 @@ public class Trader extends PurserObject {
 
         this.addedBy = addedBy;
         this.org = org;
+
+        // Have to test that the provided addedBy User UUID does exist in the Organisation's list of users.
+        try {
+            org.getUser(this.addedBy);
+        } catch (UserNotFoundException e) {
+            PurserCommon.log(PurserCommon.LogLevel.INFO,
+                    String.format("Error when creating Trader: %s - Trader creator User UUID not found.",
+                            e.getMessage()));
+            throw e;
+        }
+
         this.added = LocalDateTime.now();
 
         this.name = bundle.getName();

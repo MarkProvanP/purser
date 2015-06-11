@@ -78,7 +78,7 @@ public abstract class Transaction extends PurserObject {
                             e.getMessage()));
             throw e;
         }
-        
+
         this.status = bundle.getStatus();
     }
 

@@ -47,7 +47,7 @@ public class Organisation {
         return user.getUUID();
     }
 
-    public UUID createTrader(Trader.TraderDataBundle bundle, UUID user) {
+    public UUID createTrader(Trader.TraderDataBundle bundle, UUID user) throws PurserObjectNotFoundException {
         Trader trader = new Trader(bundle, user, this);
         traders.put(trader.getUUID(), trader);
         return trader.getUUID();
@@ -65,13 +65,13 @@ public class Organisation {
         return income.getUUID();
     }
 
-    public UUID createProject(UUID parent, Project.ProjectDataBundle bundle, UUID addedBy, Organisation org) {
+    public UUID createProject(UUID parent, Project.ProjectDataBundle bundle, UUID addedBy, Organisation org) throws PurserObjectNotFoundException {
         Project project = new Project(parent, bundle, addedBy, org);
         projects.put(project.getUUID(), project);
         return project.getUUID();
     }
 
-    public UUID createFund(Fund.FundDataBundle bundle, UUID user) {
+    public UUID createFund(Fund.FundDataBundle bundle, UUID user) throws PurserObjectNotFoundException {
         Fund fund = new Fund(bundle, user, this);
         funds.put(fund.getUUID(), fund);
         return fund.getUUID();
