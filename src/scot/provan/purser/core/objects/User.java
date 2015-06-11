@@ -52,4 +52,9 @@ public class User extends PurserObject {
         private String lastName;
 
     }
+
+    public String getDetails() {
+        return String.format("START USER | UUID: %s, First name: %s, Last name: %s | END USER",
+                super.getUUID(), firstName, lastName);
+    }
 }

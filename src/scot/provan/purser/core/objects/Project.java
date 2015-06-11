@@ -121,4 +121,16 @@ public class Project extends PurserObject {
         private Collection<UUID> users;
         private double budget;
     }
+
+    public String getDetails() {
+        String addedByString = "UNKNOWN";
+        try {
+            User addedByUser = org.getUser(addedBy);
+            addedByString = addedByUser.getDetails();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return String.format("START PROJECT | UUID: %s, Added by: %s | END PROJECT", super.getUUID(), addedByString);
+    }
 }

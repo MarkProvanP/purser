@@ -77,4 +77,15 @@ public class Fund extends PurserObject {
             return this;
         }
     }
+
+    public String getDetails() {
+        String addedByString = "UNKNOWN";
+        try {
+            User addedByUser = org.getUser(addedBy);
+            addedByString = addedByUser.getDetails();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return String.format("START FUND | UUID: %s, Added by: %s | END FUND\n", super.getUUID(), addedByString);
+    }
 }

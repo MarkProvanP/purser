@@ -56,4 +56,17 @@ public class Trader extends PurserObject {
             return this;
         }
     }
+
+    public String getDetails() {
+        String addedByString = "UNKNOWN";
+        try {
+            User addedByUser = org.getUser(addedBy);
+            addedByString = addedByUser.getDetails();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return String.format("START TRADER | UUID: %s, Added by: %s, Name: %s | END TRADER\n",
+                super.getUUID(), addedByString, name);
+    }
 }

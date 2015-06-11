@@ -171,4 +171,33 @@ public abstract class Transaction extends PurserObject {
         private UUID orgFund;
         private TransactionStatus status;
     }
+
+    public String getDetails() {
+        String addedByString = "UNKNOWN";
+        try {
+            User addedByUser = org.getUser(addedBy);
+            addedByString = addedByUser.getDetails();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String tradeWithString = "UNKNOWN";
+        try {
+            Trader tradeWithTrader = org.getTrader(tradeWith);
+            tradeWithString = tradeWithTrader.getDetails();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String orgFundString = "UNKNOWN";
+        try {
+            Fund orgFundFund = org.getFund(orgFund);
+            orgFundString = orgFundFund.getDetails();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return String.format("START TRANSACTION | UUID: %s, Added by: %s, Trade with: %s, Fund: %s, Amount: %.2f | END TRANSACTION",
+                super.getUUID(), addedByString, tradeWithString, orgFundString, amount);
+    }
 }
