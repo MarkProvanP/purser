@@ -16,6 +16,9 @@ public class PurserObjectNotFoundException extends Exception {
 
     @Override
     public String getMessage() {
+        if (uuidNotFound == null) {
+            return String.format("UUID is null");
+        }
         return String.format("Could not find object of type: %s with UUID: %s", lookingFor.getSimpleName(), uuidNotFound.toString());
     }
 }

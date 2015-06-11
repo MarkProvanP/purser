@@ -9,6 +9,14 @@ public class User extends PurserObject {
     private String firstName;
     private String lastName;
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
     public User(UserDataBundle bundle, Organisation org) {
         super();
 

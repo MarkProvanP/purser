@@ -47,19 +47,22 @@ public class Project extends PurserObject {
             throw e;
         }
 
-        // Have to test that the provided parent Project UUID does exist in the Organisation's list of projects.
-        try {
-            org.getProject(this.parent);
-        } catch (ProjectNotFoundException e) {
-            PurserCommon.log(PurserCommon.LogLevel.INFO,
-                    String.format("Error when creating Project: %s - Project parent Project UUID not found.",
-                            e.getMessage()));
-            throw e;
+        // If the parent Project UUID is not null, it must be checked to ensure that it does exist in the Organisation's
+        // list of projects. If it is null, then there is no need to check.
+        if (parent != null) {
+            try {
+                org.getProject(this.parent);
+            } catch (ProjectNotFoundException e) {
+                PurserCommon.log(PurserCommon.LogLevel.INFO,
+                        String.format("Error when creating Project: %s - Project parent Project UUID not found.",
+                                e.getMessage()));
+                throw e;
+            }
         }
 
         this.name = bundle.getName();
         this.description = bundle.getDescription();
-        this.users = bundle.getUsers();
+        this.users = bundle.getUsers() != null ? bundle.getUsers() : new ArrayList<UUID>();
 
         // Have to test that each of the provided users' User UUID does exist in the Organisation's list of users.
         for (UUID usersUUID : this.users) {

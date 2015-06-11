@@ -25,6 +25,10 @@ public class Organisation {
         return projects;
     }
 
+    public HashMap<UUID, Fund> getFunds() {
+        return funds;
+    }
+
     private HashMap<UUID, Transaction> transactions;
     private HashMap<UUID, User> users;
     private HashMap<UUID, Trader> traders;

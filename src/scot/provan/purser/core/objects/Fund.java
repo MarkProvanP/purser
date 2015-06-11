@@ -5,6 +5,7 @@ import scot.provan.purser.core.exceptions.PurserObjectNotFoundException;
 import scot.provan.purser.core.exceptions.TransactionNotFoundException;
 import scot.provan.purser.core.exceptions.UserNotFoundException;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -39,7 +40,7 @@ public class Fund extends PurserObject {
         }
 
         this.name = bundle.getName();
-        this.transactions = bundle.getTransactions();
+        this.transactions = bundle.getTransactions() != null ? bundle.getTransactions() : new ArrayList<UUID>();
 
         // Have to test that each of the provided transactions' Transaction UUID does exist in the Organisation's list of transactions.
         for (UUID transactionsUUID : this.transactions) {
