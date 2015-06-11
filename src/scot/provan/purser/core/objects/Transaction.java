@@ -1,7 +1,9 @@
 package scot.provan.purser.core.objects;
 
 import scot.provan.purser.core.PurserCommon;
+import scot.provan.purser.core.exceptions.FundNotFoundException;
 import scot.provan.purser.core.exceptions.PurserObjectNotFoundException;
+import scot.provan.purser.core.exceptions.TraderNotFoundException;
 import scot.provan.purser.core.exceptions.UserNotFoundException;
 
 import java.time.LocalDateTime;
@@ -38,6 +40,7 @@ public abstract class Transaction extends PurserObject {
         this.addedBy = addedBy;
         this.org = org;
 
+        // Have to test that the provided addedBy User UUID does exist in the Organisation's list of users.
         try {
             org.getUser(this.addedBy);
         } catch (UserNotFoundException e) {
@@ -50,10 +53,32 @@ public abstract class Transaction extends PurserObject {
         this.shortDesc = bundle.getShortDesc();
         this.longDesc = bundle.getLongDesc();
         this.amount = bundle.getAmount();
+
+        // Have to test that the provided tradeWith Trader UUID does exist in the Organisation's list of traders
         this.tradeWith = bundle.getTradeWith();
+        try {
+            org.getTrader(this.tradeWith);
+        } catch (TraderNotFoundException e) {
+            PurserCommon.log(PurserCommon.LogLevel.INFO,
+                    String.format("Error when creating Transaction: %s - Transaction's Trader UUID not found",
+                            e.getMessage()));
+            throw e;
+        }
+
         this.transactedDateTime = bundle.getTransactedDateTime();
         this.projects = bundle.getProjects();
+
         this.orgFund = bundle.getOrgFund();
+        // Have to test that the provided orgFund Fund UUID does exist in the Organisation's list of traders
+        try {
+            org.getFund(this.orgFund);
+        } catch (FundNotFoundException e) {
+            PurserCommon.log(PurserCommon.LogLevel.INFO,
+                    String.format("Error when creating Transaction: %s - Transaction's Fund UUID not found",
+                            e.getMessage()));
+            throw e;
+        }
+        
         this.status = bundle.getStatus();
     }
 
