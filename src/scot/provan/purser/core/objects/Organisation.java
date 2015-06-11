@@ -53,13 +53,13 @@ public class Organisation {
         return trader.getUUID();
     }
 
-    public UUID createExpense(Transaction.TransactionDataBundle bundle, UUID user) throws TransactionAmountException {
+    public UUID createExpense(Transaction.TransactionDataBundle bundle, UUID user) throws TransactionAmountException, PurserObjectNotFoundException {
         Expense expense = new Expense(bundle, user, this);
         transactions.put(expense.getUUID(), expense);
         return expense.getUUID();
     }
 
-    public UUID createIncome(Transaction.TransactionDataBundle bundle, UUID user) throws TransactionCreationException {
+    public UUID createIncome(Transaction.TransactionDataBundle bundle, UUID user) throws TransactionCreationException, PurserObjectNotFoundException {
         Income income = new Income(bundle, user, this);
         transactions.put(income.getUUID(), income);
         return income.getUUID();
@@ -80,7 +80,7 @@ public class Organisation {
     public User getUser(UUID userUUID) throws UserNotFoundException {
         User user = users.get(userUUID);
         if (user == null) {
-            throw new UserNotFoundException();
+            throw new UserNotFoundException(userUUID);
         }
         return user;
     }
@@ -88,7 +88,7 @@ public class Organisation {
     public Trader getTrader(UUID traderUUID) throws TraderNotFoundException {
         Trader trader = traders.get(traderUUID);
         if (trader == null) {
-            throw new TraderNotFoundException();
+            throw new TraderNotFoundException(traderUUID);
         }
         return trader;
     }
@@ -96,7 +96,7 @@ public class Organisation {
     public Project getProject(UUID projectUUID) throws ProjectNotFoundException {
         Project project = projects.get(projectUUID);
         if (project == null) {
-            throw new ProjectNotFoundException();
+            throw new ProjectNotFoundException(projectUUID);
         }
         return project;
     }
@@ -104,7 +104,7 @@ public class Organisation {
     public Transaction getTransaction(UUID transactionUUID) throws TransactionNotFoundException {
         Transaction transaction = transactions.get(transactionUUID);
         if (transaction == null) {
-            throw new TransactionNotFoundException();
+            throw new TransactionNotFoundException(transactionUUID);
         }
         return transaction;
     }
@@ -112,7 +112,7 @@ public class Organisation {
     public Fund getFund(UUID fundUUID) throws FundNotFoundException {
         Fund fund = funds.get(fundUUID);
         if (fund == null) {
-            throw new FundNotFoundException();
+            throw new FundNotFoundException(fundUUID);
         }
         return fund;
     }

@@ -1,5 +1,9 @@
 package scot.provan.purser.core.objects;
 
+import scot.provan.purser.core.PurserCommon;
+import scot.provan.purser.core.exceptions.PurserObjectNotFoundException;
+import scot.provan.purser.core.exceptions.UserNotFoundException;
+
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.UUID;
@@ -24,7 +28,7 @@ public abstract class Transaction extends PurserObject {
     private UUID orgFund;
     private TransactionStatus status;
 
-    public Transaction(TransactionDataBundle bundle, UUID addedBy, Organisation org) {
+    public Transaction(TransactionDataBundle bundle, UUID addedBy, Organisation org) throws PurserObjectNotFoundException {
         super();
 
         if (bundle == null) throw new NullPointerException("Transaction data bundle is null.");
@@ -33,6 +37,15 @@ public abstract class Transaction extends PurserObject {
 
         this.addedBy = addedBy;
         this.org = org;
+
+        try {
+            org.getUser(this.addedBy);
+        } catch (UserNotFoundException e) {
+            PurserCommon.log(PurserCommon.LogLevel.INFO,
+                    String.format("Error when creating Transaction: %s - Transaction creator User UUID not found.",
+                            e.getMessage()));
+            throw e;
+        }
 
         this.shortDesc = bundle.getShortDesc();
         this.longDesc = bundle.getLongDesc();

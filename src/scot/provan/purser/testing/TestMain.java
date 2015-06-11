@@ -64,6 +64,8 @@ public class TestMain {
         } catch (TransactionAmountException e) {
             e.printStackTrace();
             System.exit(1);
+        } catch (PurserObjectNotFoundException e) {
+            e.printStackTrace();
         }
         try {
             myExpense = (Expense) myOrg.getTransaction(myExpenseUUID);
@@ -81,6 +83,8 @@ public class TestMain {
         } catch (TransactionCreationException e) {
             e.printStackTrace();
             System.exit(1);
+        } catch (PurserObjectNotFoundException e) {
+            e.printStackTrace();
         }
         try {
             myIncome = (Income) myOrg.getTransaction(myIncomeUUID);
