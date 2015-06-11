@@ -69,8 +69,8 @@ public class Organisation {
         return income.getUUID();
     }
 
-    public UUID createProject(UUID parent, Project.ProjectDataBundle bundle, UUID addedBy, Organisation org) throws PurserObjectNotFoundException {
-        Project project = new Project(parent, bundle, addedBy, org);
+    public UUID createProject(UUID parent, Project.ProjectDataBundle bundle, UUID addedBy) throws PurserObjectNotFoundException {
+        Project project = new Project(parent, bundle, addedBy, this);
         projects.put(project.getUUID(), project);
         return project.getUUID();
     }

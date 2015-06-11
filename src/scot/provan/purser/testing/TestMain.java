@@ -44,7 +44,7 @@ public class TestMain {
         projectDataBundle.setName("Test project").setDescription("Test project description");
         UUID myProjectUUID = null;
         try {
-            myProjectUUID = myOrg.createProject(null, projectDataBundle, myUserUUID, myOrg);
+            myProjectUUID = myOrg.createProject(null, projectDataBundle, myUserUUID);
         } catch (PurserObjectNotFoundException e) {
             e.printStackTrace();
         }
