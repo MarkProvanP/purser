@@ -30,6 +30,13 @@ public abstract class Transaction extends PurserObject {
     private UUID orgFund;
     private TransactionStatus status;
 
+    /**
+     *
+     * @param bundle Bundle containing the new Transaction's data fields
+     * @param addedBy UUID of User who added the Transaction to the system
+     * @param org Organisation object reference
+     * @throws PurserObjectNotFoundException If any of the provided UUIDs are invalid
+     */
     public Transaction(TransactionDataBundle bundle, UUID addedBy, Organisation org) throws PurserObjectNotFoundException {
         super();
 
