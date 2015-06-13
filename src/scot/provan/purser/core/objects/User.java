@@ -4,8 +4,6 @@ package scot.provan.purser.core.objects;
  * Created by Mark on 07/06/2015.
  */
 public class User extends PurserObject {
-    private Organisation org;
-
     private String firstName;
     private String lastName;
 
@@ -18,12 +16,9 @@ public class User extends PurserObject {
     }
 
     public User(UserDataBundle bundle, Organisation org) {
-        super();
+        super(org);
 
         if (bundle == null) throw new NullPointerException("User data bundle is null.");
-        if (org == null) throw new NullPointerException("Organisation is null.");
-
-        this.org = org;
 
         this.firstName = bundle.getFirstName();
         this.lastName = bundle.getLastName();

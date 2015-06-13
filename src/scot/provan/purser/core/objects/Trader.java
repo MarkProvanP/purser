@@ -11,22 +11,18 @@ import java.util.UUID;
  * Created by Mark on 07/06/2015.
  */
 public class Trader extends PurserObject {
-    private UUID uuid;
     private UUID addedBy;
-    private Organisation org;
     private LocalDateTime added;
 
     private String name;
 
     public Trader(TraderDataBundle bundle, UUID addedBy, Organisation org) throws PurserObjectNotFoundException {
-        super();
+        super(org);
 
         if (bundle == null) throw new NullPointerException("Trader data bundle is null.");
         if (addedBy == null) throw new NullPointerException("User is null.");
-        if (org == null) throw new NullPointerException("Organisation is null.");
 
         this.addedBy = addedBy;
-        this.org = org;
 
         // Have to test that the provided addedBy User UUID does exist in the Organisation's list of users.
         try {
@@ -60,7 +56,7 @@ public class Trader extends PurserObject {
     public String getDetails() {
         String addedByString = "UNKNOWN";
         try {
-            User addedByUser = org.getUser(addedBy);
+            User addedByUser = super.getOrg().getUser(addedBy);
             addedByString = addedByUser.getDetails();
         } catch (Exception e) {
             e.printStackTrace();

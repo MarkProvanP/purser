@@ -9,13 +9,23 @@ import java.util.UUID;
 public abstract class PurserObject {
     private UUID uuid;
     private LocalDateTime addedDateTime;
+    private Organisation org;
 
     public UUID getUUID() {
         return uuid;
     }
+    public LocalDateTime getAddedDateTime() {
+        return addedDateTime;
+    }
+    public Organisation getOrg() {
+        return org;
+    }
 
-    public PurserObject() {
+    public PurserObject(Organisation org) {
+        if (org == null) throw new NullPointerException("Organisation is null.");
+
         this.uuid = UUID.randomUUID();
         this.addedDateTime = LocalDateTime.now();
+        this.org = org;
     }
 }

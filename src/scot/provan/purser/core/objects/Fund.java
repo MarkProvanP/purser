@@ -14,20 +14,17 @@ import java.util.UUID;
  */
 public class Fund extends PurserObject {
     private UUID addedBy;
-    private Organisation org;
 
     private String name;
     private Collection<UUID> transactions;
 
     public Fund(FundDataBundle bundle, UUID addedBy, Organisation org) throws PurserObjectNotFoundException {
-        super();
+        super(org);
 
         if (bundle == null) throw new NullPointerException("Fund bundle is null");
         if (addedBy == null) throw new NullPointerException("Fund user is null");
-        if (org == null) throw new NullPointerException("Fund org is null");
 
         this.addedBy = addedBy;
-        this.org = org;
 
         // Have to test that the provided addedBy User UUID does exist in the Organisation's list of users.
         try {
@@ -81,7 +78,7 @@ public class Fund extends PurserObject {
     public String getDetails() {
         String addedByString = "UNKNOWN";
         try {
-            User addedByUser = org.getUser(addedBy);
+            User addedByUser = super.getOrg().getUser(addedBy);
             addedByString = addedByUser.getDetails();
         } catch (Exception e) {
             e.printStackTrace();

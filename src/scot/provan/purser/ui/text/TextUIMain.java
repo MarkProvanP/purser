@@ -25,12 +25,13 @@ public class TextUIMain {
         while (true) {
             clearTerminal();
             System.out.println("x - exit / a_ - add / l_ - list / d_ - delete");
-            System.out.println("u - user");
-            System.out.println("t - trader");
-            System.out.println("p - project");
-            System.out.println("f - fund");
-            System.out.println("i - income");
-            System.out.println("e - expense");
+            System.out.println("\tu - user");
+            System.out.println("\tt - trader");
+            System.out.println("\tp - project");
+            System.out.println("\tf - fund");
+            System.out.println("\ti - income");
+            System.out.println("\te - expense");
+            System.out.println("\tr - refund");
             String ans = EasyIn.getString();
             switch (ans) {
                 case "x":
@@ -60,7 +61,12 @@ public class TextUIMain {
                 case "lf":
                     listFunds();
                     break;
-
+                case "ar":
+                    createRefund();
+                    break;
+                case "lr":
+                    listRefunds();
+                    break;
             }
         }
     }
@@ -89,6 +95,28 @@ public class TextUIMain {
         int choice = EasyIn.getInt();
         UUID userUUID = (UUID) org.getUsers().keySet().toArray()[choice];
         return userUUID;
+    }
+
+    private void listRefunds() {
+        System.out.printf("Organsiation has %d refund(s)\n", org.getRefunds().size());
+        int i = 0;
+        for (UUID refundUUID : org.getRefunds().keySet()) {
+            try {
+                Refund refund = org.getRefund(refundUUID);
+                System.out.printf("%d -> %s\n", i , refund.getDetails());
+            } catch (RefundNotFoundException e) {
+                e.printStackTrace();
+            }
+            i++;
+        }
+    }
+
+    private UUID selectRefund() {
+        System.out.println("Pick a Refund");
+        listRefunds();
+        int choice = EasyIn.getInt();
+        UUID refundUUID = (UUID) org.getRefunds().keySet().toArray()[choice];
+        return refundUUID;
     }
 
     private void listFunds() {
@@ -215,6 +243,32 @@ public class TextUIMain {
 
         try {
             org.createFund(bundle, userUUID);
+        } catch (PurserObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createRefund() {
+        System.out.println("Creating refund...");
+        UUID creatorUserUUID = selectUser();
+        System.out.println("Enter short description of new refund");
+        String shortDesc = EasyIn.getString();
+        System.out.println("Enter long description of new refund");
+        String longDesc = EasyIn.getString();
+        System.out.println("Select which user to refund");
+        UUID refundUserUUID = selectUser();
+        System.out.println("Select which project this comes as part of");
+        UUID projectUUID = selectProject();
+
+
+        Refund.RefundDataBundle bundle = new Refund.RefundDataBundle();
+        bundle.setShortDesc(shortDesc)
+                .setLongDesc(longDesc)
+                .setProject(projectUUID)
+                .setRefundUser(refundUserUUID);
+
+        try {
+            org.createRefund(bundle, creatorUserUUID);
         } catch (PurserObjectNotFoundException e) {
             e.printStackTrace();
         }

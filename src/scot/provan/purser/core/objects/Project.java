@@ -17,7 +17,6 @@ public class Project extends PurserObject {
     private Collection<UUID> children;
     private Collection<UUID> transactions;
     private UUID addedBy;
-    private Organisation org;
 
     private String name;
     private String description;
@@ -25,17 +24,15 @@ public class Project extends PurserObject {
     private double budget;
 
     public Project(UUID parent, ProjectDataBundle bundle, UUID addedBy, Organisation org) throws PurserObjectNotFoundException {
-        super();
+        super(org);
 
         if (bundle == null) throw new NullPointerException("Bundle is null.");
         if (addedBy == null) throw new NullPointerException("User is null.");
-        if (org == null) throw new NullPointerException("Organisation is null.");
 
         this.parent = parent;
         this.addedBy = addedBy;
         children = new ArrayList<UUID>();
         transactions = new ArrayList<UUID>();
-        this.org = org;
 
         // Have to test that the provided addedBy User UUID does exist in the Organisation's list of users.
         try {
@@ -125,7 +122,7 @@ public class Project extends PurserObject {
     public String getDetails() {
         String addedByString = "UNKNOWN";
         try {
-            User addedByUser = org.getUser(addedBy);
+            User addedByUser = super.getOrg().getUser(addedBy);
             addedByString = addedByUser.getDetails();
         } catch (Exception e) {
             e.printStackTrace();

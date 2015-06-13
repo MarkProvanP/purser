@@ -29,11 +29,16 @@ public class Organisation {
         return funds;
     }
 
+    public HashMap<UUID, Refund> getRefunds() {
+        return refunds;
+    }
+
     private HashMap<UUID, Transaction> transactions;
     private HashMap<UUID, User> users;
     private HashMap<UUID, Trader> traders;
     private HashMap<UUID, Project> projects;
     private HashMap<UUID, Fund> funds;
+    private HashMap<UUID, Refund> refunds;
 
     public Organisation() {
         super();
@@ -43,6 +48,7 @@ public class Organisation {
         traders = new HashMap<UUID, Trader>();
         projects = new HashMap<UUID, Project>();
         funds = new HashMap<UUID, Fund>();
+        refunds = new HashMap<UUID, Refund>();
     }
 
     public UUID createUser(User.UserDataBundle bundle) {
@@ -79,6 +85,12 @@ public class Organisation {
         Fund fund = new Fund(bundle, user, this);
         funds.put(fund.getUUID(), fund);
         return fund.getUUID();
+    }
+
+    public UUID createRefund(Refund.RefundDataBundle bundle, UUID user) throws PurserObjectNotFoundException {
+        Refund refund = new Refund(bundle, user, this);
+        refunds.put(refund.getUUID(), refund);
+        return refund.getUUID();
     }
 
     public User getUser(UUID userUUID) throws UserNotFoundException {
@@ -119,5 +131,13 @@ public class Organisation {
             throw new FundNotFoundException(fundUUID);
         }
         return fund;
+    }
+
+    public Refund getRefund(UUID refundUUID) throws RefundNotFoundException {
+        Refund refund = refunds.get(refundUUID);
+        if (refund == null) {
+            throw new RefundNotFoundException(refundUUID);
+        }
+        return refund;
     }
 }

@@ -19,7 +19,6 @@ public abstract class Transaction extends PurserObject {
     }
 
     private UUID addedBy;
-    private Organisation org;
 
     private String shortDesc;
     private String longDesc;
@@ -38,14 +37,12 @@ public abstract class Transaction extends PurserObject {
      * @throws PurserObjectNotFoundException If any of the provided UUIDs are invalid
      */
     public Transaction(TransactionDataBundle bundle, UUID addedBy, Organisation org) throws PurserObjectNotFoundException {
-        super();
+        super(org);
 
         if (bundle == null) throw new NullPointerException("Transaction data bundle is null.");
         if (addedBy == null) throw new NullPointerException("User is null.");
-        if (org == null) throw new NullPointerException("Organisation is null.");
 
         this.addedBy = addedBy;
-        this.org = org;
 
         // Have to test that the provided addedBy User UUID does exist in the Organisation's list of users.
         try {
@@ -175,7 +172,7 @@ public abstract class Transaction extends PurserObject {
     public String getDetails() {
         String addedByString = "UNKNOWN";
         try {
-            User addedByUser = org.getUser(addedBy);
+            User addedByUser = super.getOrg().getUser(addedBy);
             addedByString = addedByUser.getDetails();
         } catch (Exception e) {
             e.printStackTrace();
@@ -183,7 +180,7 @@ public abstract class Transaction extends PurserObject {
 
         String tradeWithString = "UNKNOWN";
         try {
-            Trader tradeWithTrader = org.getTrader(tradeWith);
+            Trader tradeWithTrader = super.getOrg().getTrader(tradeWith);
             tradeWithString = tradeWithTrader.getDetails();
         } catch (Exception e) {
             e.printStackTrace();
@@ -191,7 +188,7 @@ public abstract class Transaction extends PurserObject {
 
         String orgFundString = "UNKNOWN";
         try {
-            Fund orgFundFund = org.getFund(orgFund);
+            Fund orgFundFund = super.getOrg().getFund(orgFund);
             orgFundString = orgFundFund.getDetails();
         } catch (Exception e) {
             e.printStackTrace();
